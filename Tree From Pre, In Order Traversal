@@ -1,0 +1,42 @@
+BinaryTreeNode<int> *BuildTreeHelper1(int *pre, int *in, int preS, int preE, int inS, int inE)
+{
+    if(inS > inE){
+        return NULL;
+    }
+    
+    int rootData = pre[preS];
+    
+    int lpreS = preS + 1;
+    
+    //Used For Finding root in inorder array
+    int rootIndex = -1;
+    
+    for(int i=inS;i<=inE;i++)
+    {
+        if(in[i] == rootData){
+            rootIndex = i;
+            break;
+        }
+    }
+    int lInS = inS;
+    int lInE = rootIndex - 1;
+    int lpreE = lInE - lInS + lpreS;
+    
+    int rPreS = lpreE + 1;
+    int rPreE = preE;
+    int rInS = rootIndex + 1;
+    int rInE = inE;
+    
+    BinaryTreeNode<int> *root = new BinaryTreeNode<int>(rootData);
+    
+    root->left = BuildTreeHelper1(pre,in,lpreS,lpreE,lInS,lInE);
+    root->right = BuildTreeHelper1(pre,in,rPreS,rPreE,rInS,rInE);
+    
+    return root;
+}
+
+//Construct Tree From PreOrder & Inorder
+BinaryTreeNode<int> *buildTree1(int *pre, int *in, int size)
+{
+    return BuildTreeHelper1(pre,in,0,size-1,0,size-1);
+}
