@@ -1,0 +1,41 @@
+void preOrderBT(BinaryTreeNode<int> *root)
+{
+    if(root==NULL){
+        return;
+    }
+    
+    cout<<root->data<<" ";
+    
+    preOrderBT(root->left);
+    preOrderBT(root->right);
+    
+    return;
+}
+
+void inOrderBT(BinaryTreeNode<int> *root)
+{
+    if(root==NULL){
+        return;
+    }
+    
+    preOrderBT(root->left);
+    cout<<root->data<<" ";
+    preOrderBT(root->right);
+    
+    return;
+}
+
+void postOrderBT(BinaryTreeNode<int> *root)
+{
+    if(root==NULL){
+        return;
+    }
+    
+    preOrderBT(root->left);
+    preOrderBT(root->right);
+    
+    cout<<root->data<<" ";
+    
+    return;
+}
+
