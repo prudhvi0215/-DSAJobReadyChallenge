@@ -1,0 +1,16 @@
+void mirrorBT(BinaryTreeNode<int> *root)
+{
+    if(root==NULL){
+        return;
+    }
+    
+    mirrorBT(root->left);
+    mirrorBT(root->right);
+    
+    
+    BinaryTreeNode<int> *temp = root->left;
+    root->left = root->right;
+    root->right = temp;
+    
+    return;
+}
