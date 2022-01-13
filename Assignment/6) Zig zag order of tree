@@ -1,0 +1,118 @@
+//Brute Approach [My approach]
+
+class Node
+{
+  public:
+  int data;
+  Node *next;
+  
+  Node(int data)
+  {
+      this->data = data;
+      next = NULL;
+  }
+};
+
+Node *reverseLL(Node *head)
+{
+    if(head->next == NULL){
+        return head;
+    }
+    
+    Node *ansTail = reverseLL(head->next);
+    Node *ansHead = ansTail;
+    
+    while(ansTail->next)
+    {
+        ansTail = ansTail->next;
+    }
+    
+    ansTail->next = head;
+    head->next = NULL;
+    
+    return ansHead;
+}
+
+vector<Node *> levelWiseLLHelper(BinaryTreeNode<int> *root)
+{
+    vector<Node *> levelHeads;
+    
+    queue<BinaryTreeNode<int> *> pendingNodes;
+    pendingNodes.push(root);
+    pendingNodes.push(NULL);
+    
+    Node *head = NULL;
+    Node *tail = NULL;
+    
+    while(pendingNodes.size()!=0)
+    {
+        BinaryTreeNode<int> *frontNode = pendingNodes.front();
+        pendingNodes.pop();
+        
+        if(frontNode==NULL){
+            levelHeads.push_back(head);
+            head=NULL;
+            tail=NULL;
+            if(pendingNodes.size()!=0){
+                pendingNodes.push(NULL);
+            }
+        } else {
+            
+            Node *newNode = new Node(frontNode->data);
+            
+            if(head==NULL){
+                head = newNode;
+                tail = newNode;
+            } else {
+                tail->next =  newNode;
+                tail = newNode;
+            }
+            
+            if(frontNode->left){
+                pendingNodes.push(frontNode->left);
+            }
+            
+            if(frontNode->right){
+                pendingNodes.push(frontNode->right);
+            }
+            
+        }
+    }
+    
+    return levelHeads;
+}
+
+
+//6) Print Zigzag form of the given binary tree
+void zigZagTree(BinaryTreeNode<int> *root)
+{
+    if(root==NULL){
+        return;
+    }
+    
+    vector<Node *> levelWiseHeads = levelWiseLLHelper(root);
+    
+    Node *levelNode;
+    
+    for(int level=0;level<levelWiseHeads.size();level++){
+        
+        if((level+1)%2==0){
+            levelNode = reverseLL(levelWiseHeads[level]);
+        }else{
+            levelNode = levelWiseHeads[level];
+        }
+        
+        while(levelNode)
+        {
+            cout<<levelNode->data<<" ";
+            levelNode = levelNode->next;
+        }
+    }
+    
+    return;
+}
+
+
+//Better Approach Using Stacks
+
+Refer practice session of binary trees.
