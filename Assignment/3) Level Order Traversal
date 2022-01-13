@@ -1,0 +1,43 @@
+//3) Level Order Traversal [Frustrated Me Below Problem Alot I Need To Rewind This Concept.]
+
+void levelOrderTraversal(BinaryTreeNode<int> *root)
+{
+    if(root==NULL){
+        return;
+    }
+    
+    queue<BinaryTreeNode<int> *> pendingNodes;
+    pendingNodes.push(root);
+    pendingNodes.push(NULL);
+    
+    while(pendingNodes.size()!=0)
+    {
+    
+            BinaryTreeNode<int> *frontNode = pendingNodes.front();
+    
+            pendingNodes.pop();
+            
+            
+            if(frontNode==NULL)
+            {
+                cout<<endl;
+                if(pendingNodes.size()!=0){
+                    pendingNodes.push(NULL);
+                }
+            } else{
+                
+                cout<<frontNode->data<<" ";
+                
+                if(frontNode->left)
+                {
+                    pendingNodes.push(frontNode->left);
+                }
+            
+                if(frontNode->right)
+                {
+                    pendingNodes.push(frontNode->right);
+                }
+            }
+        }
+          return;
+}
